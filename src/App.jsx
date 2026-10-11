@@ -20,6 +20,9 @@ import Templates from '@/pages/Templates';
 import Contacts from '@/pages/Contacts';
 import Calendar from '@/pages/Calendar';
 import MyStatus from '@/pages/MyStatus';
+import Assistant from '@/pages/Assistant';
+import LogoDesigner from '@/pages/LogoDesigner';
+import WebsiteDesigner from '@/pages/WebsiteDesigner';
 // Add page imports here
 
 // Logged-out visitors on the home page see the marketing site (public/welcome.html);
@@ -71,6 +74,9 @@ const AuthenticatedApp = () => {
           <Route path="/contacts" element={<Contacts />} />
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/my-status" element={<MyStatus />} />
+          <Route path="/assistant" element={<Assistant />} />
+          <Route path="/logo-designer" element={<LogoDesigner />} />
+          <Route path="/website-designer" element={<WebsiteDesigner />} />
           <Route path="/workflows/:id" element={<WorkflowDetail />} />
           <Route path="/runs/:id" element={<RunDetail />} />
         </Route>

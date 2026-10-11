@@ -1,13 +1,35 @@
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { Workflow, Home as HomeIcon, PlusCircle, LayoutTemplate, Users, Calendar as CalendarIcon, Activity } from 'lucide-react';
+import {
+  MessageSquare, Rocket, Calendar as CalendarIcon, Users,
+  Palette, Globe, LayoutTemplate, PlusCircle, Activity,
+} from 'lucide-react';
 
-const nav = [
-  { to: '/', label: 'Dashboard', icon: HomeIcon },
-  { to: '/my-status', label: 'My Status', icon: Activity },
-  { to: '/templates', label: 'Templates', icon: LayoutTemplate },
-  { to: '/workflows/new', label: 'New Workflow', icon: PlusCircle },
-  { to: '/contacts', label: 'Contacts', icon: Users },
-  { to: '/calendar', label: 'Calendar', icon: CalendarIcon },
+// Left menu, top to bottom. Each group is one section of the sidebar.
+const sections = [
+  {
+    title: null,
+    items: [
+      { to: '/assistant', label: 'Ask Asst.', icon: MessageSquare },
+      { to: '/', label: 'LaunchPad', icon: Rocket },
+      { to: '/calendar', label: 'Calendar', icon: CalendarIcon },
+      { to: '/contacts', label: 'Contacts', icon: Users },
+    ],
+  },
+  {
+    title: 'Design Studio',
+    items: [
+      { to: '/logo-designer', label: 'Logo Designer', icon: Palette },
+      { to: '/website-designer', label: 'Website Designer', icon: Globe },
+    ],
+  },
+  {
+    title: 'Workflows',
+    items: [
+      { to: '/templates', label: 'Templates', icon: LayoutTemplate },
+      { to: '/workflows/new', label: 'New Workflow', icon: PlusCircle },
+      { to: '/my-status', label: 'My Status', icon: Activity },
+    ],
+  },
 ];
 
 export default function Layout() {
@@ -15,35 +37,38 @@ export default function Layout() {
   return (
     <div className="flex min-h-screen bg-muted/30">
       <aside className="w-64 shrink-0 bg-card border-r flex flex-col p-5">
-        <Link to="/" className="flex items-center gap-2 mb-8">
-          <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center">
-            <Workflow className="w-5 h-5 text-primary-foreground" />
+        <Link to="/" className="mb-8 px-1">
+          <div className="font-heading font-bold text-xl tracking-wide">
+            S<span className="text-primary">.</span>C<span className="text-primary">.</span>A<span className="text-primary">.</span>L<span className="text-primary">.</span>E<span className="text-primary">.</span>
           </div>
-          <div className="leading-tight">
-            <div className="font-heading font-bold text-base">FlowForge</div>
-            <div className="text-xs text-muted-foreground">Agentic Workflows</div>
-          </div>
+          <div className="text-xs text-muted-foreground">No Missed Calls</div>
         </Link>
-        <nav className="flex flex-col gap-1">
-          {nav.map((item) => {
-            const Icon = item.icon;
-            const active = location.pathname === item.to;
-            return (
-              <Link
-                key={item.to}
-                to={item.to}
-                className={`flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                  active ? 'bg-primary text-primary-foreground' : 'text-foreground hover:bg-muted'
-                }`}
-              >
-                <Icon className="w-4 h-4" /> {item.label}
-              </Link>
-            );
-          })}
+        <nav className="flex flex-col gap-6">
+          {sections.map((section, i) => (
+            <div key={section.title || i} className="flex flex-col gap-1">
+              {section.title && (
+                <div className="px-3 pb-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+                  {section.title}
+                </div>
+              )}
+              {section.items.map((item) => {
+                const Icon = item.icon;
+                const active = location.pathname === item.to;
+                return (
+                  <Link
+                    key={item.to}
+                    to={item.to}
+                    className={`flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                      active ? 'bg-primary text-primary-foreground' : 'text-foreground hover:bg-muted'
+                    }`}
+                  >
+                    <Icon className="w-4 h-4" /> {item.label}
+                  </Link>
+                );
+              })}
+            </div>
+          ))}
         </nav>
-        <div className="mt-auto text-xs text-muted-foreground px-3">
-          The #1 SaaS category of 2026
-        </div>
       </aside>
       <main className="flex-1 overflow-auto">
         <Outlet />

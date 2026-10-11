@@ -1,0 +1,101 @@
+{
+  "name": "Run",
+  "type": "object",
+  "properties": {
+    "workflow_id": {
+      "type": "string",
+      "title": "Workflow ID"
+    },
+    "workflow_name": {
+      "type": "string",
+      "title": "Workflow Name"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "running",
+        "completed",
+        "failed"
+      ],
+      "default": "pending",
+      "title": "Status"
+    },
+    "input": {
+      "type": "string",
+      "title": "Input"
+    },
+    "result": {
+      "type": "string",
+      "title": "Result"
+    },
+    "steps_log": {
+      "type": "array",
+      "title": "Steps Log",
+      "items": {
+        "type": "object"
+      }
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Started At"
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Completed At"
+    },
+    "repair_attempts": {
+      "type": "number",
+      "title": "Repair Attempts",
+      "description": "Number of times the self-repair workflow has retried this run",
+      "default": 0
+    }
+  },
+  "required": [
+    "workflow_id",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

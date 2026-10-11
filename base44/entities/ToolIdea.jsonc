@@ -1,0 +1,80 @@
+{
+  "name": "ToolIdea",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "title": "Name"
+    },
+    "description": {
+      "type": "string",
+      "title": "Description"
+    },
+    "category": {
+      "type": "string",
+      "title": "Category"
+    },
+    "source": {
+      "type": "string",
+      "title": "Source",
+      "description": "Where it was found, e.g. Product Hunt, X"
+    },
+    "source_url": {
+      "type": "string",
+      "title": "Source URL"
+    },
+    "relevance_score": {
+      "type": "number",
+      "title": "Relevance Score",
+      "description": "1-10, 10 = perfect fit for the agentic workflow platform"
+    },
+    "stage": {
+      "type": "string",
+      "enum": [
+        "discovered",
+        "building",
+        "tested",
+        "published",
+        "failed"
+      ],
+      "default": "discovered",
+      "title": "Stage"
+    },
+    "workflow_id": {
+      "type": "string",
+      "title": "Workflow ID",
+      "description": "Linked Workflow once the idea is built"
+    },
+    "error_notes": {
+      "type": "string",
+      "title": "Error Notes",
+      "description": "Last error and suggested fix if a stage failed"
+    }
+  },
+  "required": [
+    "name",
+    "stage"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

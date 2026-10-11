@@ -1,0 +1,45 @@
+{
+  "description": "Scans Product Hunt, X, and AI directories for new SaaS/AI tools each morning and adds relevant finds to the Tool Idea database.",
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "daily_tool_discovery",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "discover": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "discoverTools",
+            "args": {}
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Discover new SaaS tools",
+            "description": "Web search via LLM, dedupe, save to Tool Idea"
+          }
+        }
+      }
+    ]
+  },
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "0 9 * * *",
+      "one_time_date": null,
+      "timezone": "America/New_York",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "name": "Daily Tool Discovery"
+}

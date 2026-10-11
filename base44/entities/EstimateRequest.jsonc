@@ -1,0 +1,37 @@
+{
+  "name": "EstimateRequest",
+  "type": "object",
+  "properties": {
+    "price_sheet_id": { "type": "string", "title": "Price Sheet" },
+    "owner_id": { "type": "string", "title": "Business Owner" },
+    "customer_name": { "type": "string", "title": "Customer Name" },
+    "customer_phone": { "type": "string", "title": "Customer Phone" },
+    "customer_email": { "type": "string", "title": "Customer Email" },
+    "description": { "type": "string", "title": "Job Description" },
+    "media_urls": { "type": "array", "title": "Photos", "items": { "type": "string" } },
+    "line_items": {
+      "type": "array",
+      "title": "Estimate Lines",
+      "items": {
+        "type": "object",
+        "properties": {
+          "service": { "type": "string" },
+          "detail": { "type": "string" },
+          "low": { "type": "number" },
+          "high": { "type": "number" }
+        }
+      }
+    },
+    "estimate_low": { "type": "number", "title": "Estimate Low" },
+    "estimate_high": { "type": "number", "title": "Estimate High" },
+    "summary": { "type": "string", "title": "Summary" },
+    "questions": { "type": "array", "title": "Things to Confirm", "items": { "type": "string" } },
+    "status": { "type": "string", "enum": ["new", "contacted", "booked", "closed"], "default": "new", "title": "Status" }
+  },
+  "rls": {
+    "read": { "$or": [{ "owner_id": "{{user.id}}" }, { "user_condition": { "role": "admin" } }] },
+    "create": { "user_condition": { "role": "admin" } },
+    "update": { "$or": [{ "owner_id": "{{user.id}}" }, { "user_condition": { "role": "admin" } }] },
+    "delete": { "$or": [{ "owner_id": "{{user.id}}" }, { "user_condition": { "role": "admin" } }] }
+  }
+}

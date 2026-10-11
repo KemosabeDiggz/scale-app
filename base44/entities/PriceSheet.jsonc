@@ -1,0 +1,32 @@
+{
+  "name": "PriceSheet",
+  "type": "object",
+  "properties": {
+    "business_name": { "type": "string", "title": "Business Name" },
+    "phone": { "type": "string", "title": "Business Phone" },
+    "service_area": { "type": "string", "title": "Service Area" },
+    "intro": { "type": "string", "title": "Note to Customers" },
+    "items": {
+      "type": "array",
+      "title": "Price Sheet",
+      "items": {
+        "type": "object",
+        "properties": {
+          "service": { "type": "string", "title": "Service" },
+          "price_low": { "type": "number", "title": "Low Price" },
+          "price_high": { "type": "number", "title": "High Price" },
+          "unit": { "type": "string", "title": "Priced Per" },
+          "notes": { "type": "string", "title": "Notes" }
+        }
+      }
+    },
+    "active": { "type": "boolean", "title": "Accepting Estimate Requests", "default": true }
+  },
+  "required": ["business_name"],
+  "rls": {
+    "read": { "$or": [{ "created_by_id": "{{user.id}}" }, { "user_condition": { "role": "admin" } }] },
+    "create": { "created_by_id": "{{user.id}}" },
+    "update": { "$or": [{ "created_by_id": "{{user.id}}" }, { "user_condition": { "role": "admin" } }] },
+    "delete": { "$or": [{ "created_by_id": "{{user.id}}" }, { "user_condition": { "role": "admin" } }] }
+  }
+}

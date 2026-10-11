@@ -23,6 +23,8 @@ import MyStatus from '@/pages/MyStatus';
 import Assistant from '@/pages/Assistant';
 import LogoDesigner from '@/pages/LogoDesigner';
 import WebsiteDesigner from '@/pages/WebsiteDesigner';
+import Estimator from '@/pages/Estimator';
+import PublicEstimate from '@/pages/PublicEstimate';
 // Add page imports here
 
 // Logged-out visitors on the home page see the marketing site (public/welcome.html);
@@ -77,6 +79,7 @@ const AuthenticatedApp = () => {
           <Route path="/assistant" element={<Assistant />} />
           <Route path="/logo-designer" element={<LogoDesigner />} />
           <Route path="/website-designer" element={<WebsiteDesigner />} />
+          <Route path="/estimator" element={<Estimator />} />
           <Route path="/workflows/:id" element={<WorkflowDetail />} />
           <Route path="/runs/:id" element={<RunDetail />} />
         </Route>
@@ -94,7 +97,11 @@ function App() {
       <QueryClientProvider client={queryClientInstance}>
         <Router>
           <ScrollToTop />
-          <AuthenticatedApp />
+          <Routes>
+            {/* Customers open the estimate link without an account */}
+            <Route path="/estimate/:sheetId" element={<PublicEstimate />} />
+            <Route path="*" element={<AuthenticatedApp />} />
+          </Routes>
         </Router>
         <Toaster />
       </QueryClientProvider>
